@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Project.External
+namespace Approx
 {
     public interface IFunction
     {
@@ -33,7 +35,6 @@ namespace Project.External
         void Calculate(double[] xf);
     }
 
-
     public abstract class AFunction : IFunction
     {
         public int N { get; protected set; }
@@ -44,9 +45,10 @@ namespace Project.External
 
         public double[] Max { get; set; } = null;
 
+        //public abstract void Calculate(MeasuredPoint xf);
+
         public abstract void Calculate(double[] xf);
     }
-
 
     public delegate void FunctionDelegate(double[] xy);
 
@@ -61,7 +63,7 @@ namespace Project.External
             this.f = f;
         }
 
-        private FunctionDelegate f;
+        private readonly FunctionDelegate f;
 
         public int N { get; private set; }
         public int M { get; private set; }

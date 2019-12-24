@@ -1,13 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Project.External
+namespace Approx
 {
-    public class Shepard : AFunction
+    public interface IApprox
+    {
+        void Calculate(double[] xf);
+        double GetError(double[] oldPoint, double[] newPoint);
+    }
+
+    class ShepardApprox : AFunction, IApprox
     {
         alglib.idwint.idwinterpolant[] z = null;
         double[] xy;
 
-        public Shepard(int N, double[][] xf, int[] index = null)
+        public ShepardApprox(int N, double[][] xf, int[] index = null)
         {
             int n = (index == null) ? xf.Length : index.Length;
             int NM = xf[0].Length;
@@ -43,6 +53,18 @@ namespace Project.External
             else if (xy != null)
                 for (int m = 0; m < M; m++)
                     xf[N + m] = xy[N + m];
+        }
+
+        public double GetError(double[] oldPoint, double[] newPoint)
+        {
+            double result = 0;
+            for (int i = 0; i < M; i++)
+            {
+                double[] diffs = oldPoint.Zip(newPoint, (d1, d2) => Math.Abs(d1 - d2)).ToArray();
+                double err = (diffs.Sum() / diffs.Length);
+                result += err;
+            }
+            return result;
         }
     }
 }

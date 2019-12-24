@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Project.External
+namespace Approx
 {
     public static class Tools
     {
@@ -169,7 +173,6 @@ namespace Project.External
             return max;
         }
 
-
         public static double[] Min(double[][] xf, int[] index)
         {
             int count = index.Length;
@@ -191,5 +194,6 @@ namespace Project.External
                     if (max[j] < xf[i][j]) max[j] = xf[i][j];
             return max;
         }
+
     }
 }
